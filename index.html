@@ -78,14 +78,114 @@
             padding: 20px;
             text-align: center;
         }
+        
+        pre {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        code {
+            color: #333;
+        }
+        
+        code .keyword {
+            color: #0077aa;
+        }
+        
+        code .string {
+            color: #dd1144;
+        }
+        
+        code .comment {
+            color: #999988;
+            font-style: italic;
+        }
+        
     </style>
 </head>
 <body>
     <div class="container">
         <div class="main"> 
                 <div class="post">
+                    <h2 class="post-title">tinygrad day 1: function approximation</h2>
+                    <div class="post-meta">2023-07-11</div>
+                    <div class="post-content">
+                        You need to code your own MSE loss. Overall, it works like a charm, just like Pytorch.
+                        Due to very little overhead in documentation, you will need trial and error to run the
+                        moving codebase. Once understood however, it just works. Function approximation is solved.
+                        PDE solving comes next.
+
+                    <!---
+                    <code>
+                      class Net:
+                          def __init__(self, in_channels=1, out_channels=1, num_layers=4, dims=6):
+                              self.in_channels  = in_channels
+                              self.out_channels = out_channels
+                              self.num_layers   = num_layers
+                              self.dims         = dims
+                      
+                              self.input_layer  = Linear(in_channels, dims)
+                              self.output_layer = Linear(dims, out_channels)
+                      
+                              self.activation   = Tensor.tanh
+                              self.layers       = [Linear(dims, dims, bias=False,) for _ in range(self.num_layers)]
+                      
+                      
+                          def __call__(self, x: Tensor, transform = None):
+                              if transform is None:
+                                  return self.forward(x)
+                              raise NotImplementedError("Transform case not handled yet")
+                      
+                          def forward(self, x):
+                              x = self.activation(self.input_layer(x))
+                              for l in self.layers:
+                                  x = self.activation(l(x))
+                              return self.output_layer(x)
+                      
+                      
+                      def exact_solution(x: Tensor):
+                          return Tensor.sin(x)
+                      
+                      # simple MSE
+                      def loss_fn(x, y):
+                          return ((x-y) ** 2).mean()
+                      
+                      
+                      
+                      if __name__ == '__main__':
+                          Tensor.manual_seed(42)
+                          net = Net()
+                          n = 100
+                          # samples
+                          x = Tensor.uniform(n, 1) * pi
+                          y = exact_solution(x)
+                          optimizer = optim.Adam(get_parameters(net), lr=7e-4, b1=.9, b2=.98)
+                          losses = list()
+                          lossfn = loss_fn
+                      
+                          epochs = 1500
+                          Tensor.training = True
+                      
+                          for step in range(epochs):
+                              l = []
+                              y_hat = net(x)
+                              loss = lossfn(y_hat, y)
+                              optimizer.zero_grad()
+                              loss.backward()
+                              optimizer.step()
+                              losses.append(loss.detach().cpu().numpy())
+                              print(f"{step=}: loss={losses[-1]:.2f}")
+                    </code>
+                    --->
+                    </div>
+                </div>
+
+                <div class="post">
                     <h2 class="post-title">Notes on setting up tinygrad</h2>
-                    <div class="post-meta">2023-07-oo</div>
+                    <div class="post-meta">2023-07-08</div>
                     <div class="post-content">
                         micromamba create -n tiny pytorch numpy
                     </div>
